@@ -1,20 +1,16 @@
 import express from 'express';
-import Destination from '../models/Destination.js';
+import { createRequire } from 'module';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+import mongoose from 'mongoose';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  const { category, budget, search } = req.query;
-  const filter = {};
-  if (category) filter.category = category;
-  if (budget) filter.avgBudget = budget;
-  if (search) filter.name = { $regex: search, $options: 'i' };
-  const destinations = await Destination.find(filter);
-  res.json(destinations);
-});
-
-router.post('/', async (req, res) => {
-  const dest = await Destination.create(req.body);
-  res.status(201).json(dest);
+  res.json({ message: 'destinations working' });
 });
 
 export default router;
